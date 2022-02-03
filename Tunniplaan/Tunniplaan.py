@@ -1,57 +1,75 @@
 from tkinter import*
+from tkinter.messagebox import*
+def failist_sõnastikusse():
+	tund_kirjeldus={}
+	file=open("Tund.txt","r")
+	for line in file:
+		tund,kirjeldus=line.strip().split(":")
+		tund_kirjeldus[tund.strip()] =kirjeldus.strip()
+	file.close()
+	print(tund_kirjeldus)
+	return tund_kirjeldus
+
+def kirjeldus_aknasse(t:str):
+	if(askyesno("Küsimus", "Kas tahad kirjeldust näha?")):
+		alam_aken=Toplevel()
+		alam_aken.title(t)
+		lbl_kirjeldus=Label(alam_aken,text=tund_kirjeldus[t]).pack()
+		c=Canvas(alam_aken,height=500, width=500)
+		file=PhotoImage(file="")
+		c.create_image(10,10)
+		alam_aken.mainloop
+
+#frameCnt = 7
+#frames = [PhotoImage(files="название гифки.gif", format = "gif -index %i" %(i)) for i]
+tund_kirjeldus=failist_sõnastikusse()
+
 
 tunniplaan=Tk()
 tunniplaan.title("Akna nimetus")
-tunniplaan.geometry("1080x1024")
-Ep=Label(tunniplaan,text ="Esmaspäev",font="Arial 22",height=4,width=10, relief="ridge").grid(row=1,column=0, rowspan=2, sticky=N+S+W+E)
-Tp=Label(tunniplaan,text ="Teisepäev",font="Arial 22",height=4,width=10, relief="ridge").grid(row=3,column=0, rowspan=2, sticky=N+S+W+E)
-Kp=Label(tunniplaan,text ="Kolmapäev",font="Arial 22",height=4,width=10, relief="ridge").grid(row=5,column=0, rowspan=2, sticky=N+S+W+E)
-Np=Label(tunniplaan,text ="Neljapäev",font="Arial 22",height=4,width=10, relief="ridge").grid(row=7,column=0, rowspan=2, sticky=N+S+W+E)
-Rp=Label(tunniplaan,text ="Reede",font="Arial 22",height=4,width=10, relief="ridge").grid(row=9,column=0, rowspan=2, sticky=N+S+W+E)
+tunniplaan.geometry("800x500")
+p=["Esmaspäev","Teisipäev","Kolmapäev", "Neljapäev", "Reede"]
+j=0
+for i in range (1,10,2):
+	Ep = Label(tunniplaan, font="Arial 22",height=4,width=10,text=p[j], relief="ridge").grid(row=i,column=0,rowspan=2,sticky=N+S+W+E)
+	j+=1
 
-t0=Label(tunniplaan,text ="0",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=1, sticky=N+S+W+E)
-t1=Label(tunniplaan,text ="1",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=2, sticky=N+S+W+E)
-t2=Label(tunniplaan,text ="2",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=3, sticky=N+S+W+E)
-t3=Label(tunniplaan,text ="3",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=4, sticky=N+S+W+E)
-t4=Label(tunniplaan,text ="4",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=5, sticky=N+S+W+E)
-t5=Label(tunniplaan,text ="5",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=6, sticky=N+S+W+E)
-t6=Label(tunniplaan,text ="6",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=7, sticky=N+S+W+E)
-t7=Label(tunniplaan,text ="7",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=8, sticky=N+S+W+E)
-t9=Label(tunniplaan,text ="8",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=9, sticky=N+S+W+E)
-t10=Label(tunniplaan,text ="9",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=10, sticky=N+S+W+E)
-t11=Label(tunniplaan,text ="10",font="Arial 18",height=3,width=6, relief="ridge").grid(row=0,column=11, sticky=N+S+W+E)
+kell= ["7:40 - 8:25", "8:30-9:15", "9:20-10:05", "10:10-10:55", "11:00-11:45", "11:50-12:35", "12:40-13:25", "13:30-14:15", "14:20-15:05", "15:10-15:55", "16:00-16:45"]
+for i in range(11):
+	tunnid = Label(tunniplaan,text = str(i)+ "\n"+kell[i],font="Arial 10",height=3,width=6, relief="ridge").grid(row = 0, column=i+1, sticky=N+S+W+E)
+
 
 #Esmaspäev
-Button(tunniplaan, text ="Multimeedia",bg="#adc1ff", font="Arial 12",height=2,width=12,relief="ridge").grid(row=1,column=2, columnspan=2, sticky=N+S+W+E)
-Button(tunniplaan, text ="Programmeerimise alused",bg="#ade1ff", font="Arial 12",height=2,width=12,relief="ridge").grid(row=2,column=2, columnspan=3, sticky=N+S+W+E)
-Button(tunniplaan, text ="Multimeedia",bg="#adc1ff", font="Arial 12",height=2,width=12,relief="ridge").grid(row=2,column=5, columnspan=2, sticky=N+S+W+E)
-Button(tunniplaan, text ="Programmeerimise alused",bg="#ade1ff", font="Arial 12",height=2,width=12,relief="ridge").grid(row=1,column=5, columnspan=3, sticky=N+S+W+E)
-Button(tunniplaan, text ="Rühmaju \n hataja \n tund",bg="#ade1ff", font="Arial 12",height=2,width=12,relief="ridge").grid(row=1,column=8, rowspan=2, sticky=N+S+W+E)
+t1=Button(tunniplaan, text ="Multimeedia",bg="#adc1ff", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Multimeedia")).grid(row=1,column=2, columnspan=2, sticky=N+S+W+E)
+t2=Button(tunniplaan, text ="Programmeerimise alused",bg="#ade1ff", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Programmeerimise alused")).grid(row=2,column=2, columnspan=3, sticky=N+S+W+E)
+t3=Button(tunniplaan, text ="Multimeedia",bg="#adc1ff", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Multimeedia")).grid(row=2,column=5, columnspan=2, sticky=N+S+W+E)
+t4=Button(tunniplaan, text ="Programmeerimise alused",bg="#ade1ff", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Programmeerimise alused")).grid(row=1,column=5, columnspan=3, sticky=N+S+W+E)
+t5=Button(tunniplaan, text ="Rühmaju \n hataja \n tund",bg="#ade1ff", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Programmeerimise alused")).grid(row=1,column=8, rowspan=2, sticky=N+S+W+E)
 #Teisipäev
-Button(tunniplaan, text = "Inglise keel", bg = "#fffff0", font="Arial 12",height=2,width=12,relief="ridge").grid(row = 3, column = 2, columnspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Inglise keel", bg = "#e1adff",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 4, column = 2, columnspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Operatsiooni \n süsteemide \n alused", bg = "#e181ff", font="Arial 12",height=2,width=12,relief="ridge").grid(row = 3, column = 4, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Kehaline kasvatus", bg = "#e181c1", font="Arial 12",height=2,width=12,relief="ridge").grid(row = 3, column = 7, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Eesti keel", bg = "#cdb5ff", font="Arial 12",height=2,width=12,relief="ridge").grid(row = 3, column = 9, sticky = N+S+W+E)
-Button(tunniplaan, text = "Eesti keel", bg = "#cbb6c8",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 4, column = 9, sticky = N+S+W+E)
-Button(tunniplaan, text = "Ajalugu,\n inimgeo\n graafia \n ja inimese\n õpetus\n eesti keeles", bg = "#ffe7b4", font="Arial 12",height=2,width=12,relief="ridge").grid(row = 3, column = 10, rowspan = 2, sticky = N+S+W+E)
+t6=Button(tunniplaan, text = "Inglise keel", bg = "#fffff0", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Inglise keel group1")).grid(row = 3, column = 2, columnspan = 2, sticky = N+S+W+E)
+t7=Button(tunniplaan, text = "Inglise keel", bg = "#e1adff",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Inglise keel group2")).grid(row = 4, column = 2, columnspan = 2, sticky = N+S+W+E)
+t8=Button(tunniplaan, text = "Operatsiooni \n süsteemide \n alused", bg = "#e181ff", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Operatsioonisüsteemide  alused")).grid(row = 3, column = 4, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
+t9=Button(tunniplaan, text = "Kehaline kasvatus", bg = "#e181c1", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Kehaline kasvatus")).grid(row = 3, column = 7, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
+t10=Button(tunniplaan, text = "Eesti keel", bg = "#cdb5ff", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Eesti keel group1")).grid(row = 3, column = 9, sticky = N+S+W+E)
+t11=Button(tunniplaan, text = "Eesti keel", bg = "#cbb6c8",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Eesti keel group2")).grid(row = 4, column = 9, sticky = N+S+W+E)
+t12=Button(tunniplaan, text = "Ajalugu,\n inimgeo\n graafia \n ja inimese\n õpetus\n eesti keeles", bg = "#ffe7b4", font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Ajalugu, inimgeo graafia ja inimese õpetus eesti keeles")).grid(row = 3, column = 10, rowspan = 2, sticky = N+S+W+E)
 #Kolmapäev
-Button(tunniplaan, text = "Programmeerimise alused", bg = "#ade1ff",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 5, column = 2, columnspan = 3, sticky = N+S+W+E)
-Button(tunniplaan, text = "Multimeedia", bg = "#adc1ff",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 6, column = 2, columnspan = 3, sticky = N+S+W+E)
-Button(tunniplaan, text = "Multimeedia", bg = "#adc1ff",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 5, column = 6, columnspan = 3, sticky = N+S+W+E)
-Button(tunniplaan, text = "Programmeerimise alused", bg = "#ade1ff",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 6, column = 6, columnspan = 3, sticky = N+S+W+E)
-Button(tunniplaan, text = "Kunstiained", bg = "#e181cf",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 5, column = 9, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
+t13=Button(tunniplaan, text = "Programmeerimise alused", bg = "#ade1ff",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Programmeerimise alused")).grid(row = 5, column = 2, columnspan = 3, sticky = N+S+W+E)
+t14=Button(tunniplaan, text = "Multimeedia", bg = "#adc1ff",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Multimeedia")).grid(row = 6, column = 2, columnspan = 3, sticky = N+S+W+E)
+t15=Button(tunniplaan, text = "Multimeedia", bg = "#adc1ff",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Multimeedia")).grid(row = 5, column = 6, columnspan = 3, sticky = N+S+W+E)
+t16=Button(tunniplaan, text = "Programmeerimise alused", bg = "#ade1ff",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Programmeerimise alused")).grid(row = 6, column = 6, columnspan = 3, sticky = N+S+W+E)
+t17=Button(tunniplaan, text = "Kunstiained", bg = "#e181cf",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Kunstiained")).grid(row = 5, column = 9, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
 #Neljapäev
-Button(tunniplaan, text = "Andmebaasisüstee \n mide alused (eesti \n keeles)", bg = "#ff81a2",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 7, column = 2, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Andmebaasisüsteemide alused \n (eesti keeles)", bg = "#ff81a2",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 7, column = 4, columnspan = 3, rowspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Ajalugu,\n inimgeo\n graafia \n ja inimese\n õpetus\n eesti keeles", bg = "#ffe7b4",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 7, column = 7, rowspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Eesti keel", bg = "#cdb5ff",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 7, column = 8, sticky = N+S+W+E)
-Button(tunniplaan, text = "Eesti keel", bg = "#cbb6c8",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 8, column = 8, sticky = N+S+W+E)
+t18=Button(tunniplaan, text = "Andmebaasisüstee \n mide alused (eesti \n keeles)", bg = "#ff81a2",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Andmebaasisüstee mide alused (eesti keeles)")).grid(row = 7, column = 2, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
+t19=Button(tunniplaan, text = "Andmebaasisüsteemide alused \n (eesti keeles)", bg = "#ff81a2",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Andmebaasisüstee mide alused (eesti keeles)")).grid(row = 7, column = 4, columnspan = 3, rowspan = 2, sticky = N+S+W+E)
+t20=Button(tunniplaan, text = "Ajalugu,\n inimgeo\n graafia \n ja inimese\n õpetus\n eesti keeles", bg = "#ffe7b4",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Ajalugu, inimgeo graafia ja inimese õpetus eesti keeles")).grid(row = 7, column = 7, rowspan = 2, sticky = N+S+W+E)
+t21=Button(tunniplaan, text = "Eesti keel", bg = "#cdb5ff",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Eesti keel group1")).grid(row = 7, column = 8, sticky = N+S+W+E)
+t22=Button(tunniplaan, text = "Eesti keel", bg = "#cbb6c8",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Eesti keel group2")).grid(row = 8, column = 8, sticky = N+S+W+E)
 #Reede
-Button(tunniplaan, text = "Keel ja kirjandus", bg = "#e1ff81",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 9, column = 3, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Matemaatika", bg = "#fcbad2",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 9, column = 6, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Suhtlemine ja \n klienditeenindus", bg = "#c1adff",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 9, column = 8, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
-Button(tunniplaan, text = "Ajalugu,\n inimgeo\n graafia \n ja inimese\n õpetus\n eesti keeles", bg = "#ffe7b4",font="Arial 12",height=2,width=12,relief="ridge").grid(row = 9, column = 10, rowspan = 2, sticky = N+S+W+E)
+t23=Button(tunniplaan, text = "Keel ja kirjandus", bg = "#e1ff81",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Keel ja kirjandus")).grid(row = 9, column = 3, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
+t24=Button(tunniplaan, text = "Matemaatika", bg = "#fcbad2",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Matemaatika")).grid(row = 9, column = 6, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
+t25=Button(tunniplaan, text = "Suhtlemine ja \n klienditeenindus", bg = "#c1adff",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Suhtlemine ja klienditeenindus")).grid(row = 9, column = 8, columnspan = 2, rowspan = 2, sticky = N+S+W+E)
+t26=Button(tunniplaan, text = "Ajalugu,\n inimgeo\n graafia \n ja inimese\n õpetus\n eesti keeles", bg = "#ffe7b4",font="Arial 12",height=2,width=12,relief="ridge", command=lambda:kirjeldus_aknasse("Ajalugu, inimgeo graafia ja inimese õpetus eesti keeles")).grid(row = 9, column = 10, rowspan = 2, sticky = N+S+W+E)
 #Blank panel 
 Label(tunniplaan,text =" ",font="Arial 22",height=3,width=6, relief="ridge").grid(row=1,column=1, rowspan=2, sticky=N+S+W+E)
 Label(tunniplaan,text =" ",font="Arial 22",height=3,width=6, relief="ridge").grid(row=3,column=1, rowspan=2, sticky=N+S+W+E)
@@ -70,6 +88,7 @@ Label(tunniplaan,text =" ",font="Arial 22",height=3,width=6, relief="ridge").gri
 Label(tunniplaan,text =" ",font="Arial 22",height=3,width=6, relief="ridge").grid(row=9,column=1, rowspan=2, sticky=N+S+W+E)
 Label(tunniplaan,text =" ",font="Arial 22",height=3,width=6, relief="ridge").grid(row=9,column=2, rowspan=2, sticky=N+S+W+E)
 Label(tunniplaan,text =" ",font="Arial 22",height=3,width=6, relief="ridge").grid(row=9,column=5, rowspan=2, sticky=N+S+W+E)
+Label(tunniplaan,text =" ",font="Arial 22",height=3,width=6, relief="ridge").grid(row=0,column=0, sticky=N+S+W+E)
 
 
 tunniplaan.mainloop()
