@@ -24,6 +24,21 @@
     <Compile Include="Tunniplaan.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="art.png" />
+    <Content Include="class.png" />
+    <Content Include="code.png" />
+    <Content Include="cust.png" />
+    <Content Include="data.png" />
+    <Content Include="Eng.png" />
+    <Content Include="eng2.png" />
+    <Content Include="Est.png" />
+    <Content Include="est2.png" />
+    <Content Include="fit.png" />
+    <Content Include="geo.png" />
+    <Content Include="math.png" />
+    <Content Include="mult.png" />
+    <Content Include="OS.png" />
+    <Content Include="rus.png" />
     <Content Include="Tund.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
